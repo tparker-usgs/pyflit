@@ -19,6 +19,4 @@ setup(
         "Topic :: Software Development :: Libraries",
         "License :: OSI Approved :: GNU General Public License (GPL)",
     ],
-    install_requires=[
-        ],
 )
