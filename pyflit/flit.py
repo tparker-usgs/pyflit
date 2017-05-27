@@ -483,11 +483,16 @@ class MultiSegmenting(object):
                 return True
         return False
 
-    def __call__(self, url_req, segments=2):
+    def __call__(self, url_req, segments=2, outfile=None):
         url_size = self.flitter.get_url_size(url_req)
 
         ranges = self.split_segment(url_size, segments)
-        output = self.flitter.get_url_file_name(url_req)
+
+        if outfile is None:
+            output = self.flitter.get_url_file_name(url_req)
+        else:
+            output = outfile
+
         filename = ["%s_tmp_%d.pfb" % (output, i) for i in range(segments)]
 
         tasks = []
@@ -534,7 +539,7 @@ def flit_tasks(tasks, threads_number, opener=get_opener()):
     return chunks
 
 
-def flit_segments(url_req, segment_number=2, opener=get_opener()):
+def flit_segments(url_req, segment_number=2, opener=get_opener(), outfile=None):
     """Multiple segment file downloading, a replacement of wget. ;-)
 
     Arguments:
@@ -546,4 +551,4 @@ def flit_segments(url_req, segment_number=2, opener=get_opener()):
     # Some proxy server couldn't support fetch range feature
     # reset segment_number to 1.
     flitter = MultiSegmenting(opener)
-    flitter(url_req, segment_number)
+    flitter(url_req, segment_number, outfile)
