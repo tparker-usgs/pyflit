@@ -507,7 +507,8 @@ class MultiSegmenting(object):
         time.sleep(0.5)
         while self._islive(tasks):
             fetched = sum([t.fetched for t in tasks])
-            utils.progressbar(url_size, fetched)
+            time.sleep(0.3)
+            # utils.progressbar(url_size, fetched)
 
         fileobj = open(output, 'wb+')
         try:
@@ -520,7 +521,8 @@ class MultiSegmenting(object):
 
         finished_size = os.path.getsize(output)
         if abs(url_size - finished_size) <= 10:
-            utils.progressbar(url_size, finished_size, 100)
+            time.sleep(0.3)
+            # utils.progressbar(url_size, finished_size, 100)
 
 
 def flit_tasks(tasks, threads_number, opener=get_opener()):
